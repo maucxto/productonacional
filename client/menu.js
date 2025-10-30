@@ -135,7 +135,7 @@ function renderCarousel() {
                                 <div class="flex items-center justify-between">
                                     <span class="text-xl font-bold text-gold">$${product.price}</span>
                                     <div class="flex items-center space-x-2">
-                                        ${product.tags.map(tag => 
+                                        ${(product.tags || []).map(tag =>
                                             `<span class="px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full">${tag}</span>`
                                         ).join('')}
                                     </div>
@@ -239,7 +239,7 @@ function createProductCard(product) {
                 <div class="flex items-center justify-between">
                     <span class="text-xl font-bold text-gold">$${product.price}</span>
                     <div class="flex items-center space-x-2">
-                        ${product.tags.map(tag => 
+                        ${(product.tags || []).map(tag =>
                             `<span class="px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full">${tag}</span>`
                         ).join('')}
                     </div>
