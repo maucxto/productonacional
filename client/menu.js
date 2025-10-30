@@ -134,7 +134,7 @@ function renderCarousel() {
             </div>
             <div class="grid grid-cols-1 gap-4">
                 ${products.filter(product => product.available).map(product => `
-                    <div class="product-card bg-white rounded-2xl p-4 shadow-custom cursor-pointer" onclick="openProductModal(${JSON.stringify(product)})">
+                    <div class="product-card bg-white rounded-2xl p-4 shadow-custom cursor-pointer" onclick="openProductModal(JSON.parse('${JSON.stringify(product)}'))">
                         <div class="flex items-start space-x-4">
                             <div class="flex-shrink-0">
                                 <img src="${product.image}" alt="${product.name}" 
