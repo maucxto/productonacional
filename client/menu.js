@@ -70,7 +70,7 @@ async function loadMenu() {
         // Usar datos de respaldo
         menuData = organizeProductsByCategory(db.getProducts());
         categoryKeys = Object.keys(menuData);
-        renderCategories();
+        updateCarouselNav();
         renderCarousel();
         renderIndicators();
         updateCarouselNav();
