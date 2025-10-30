@@ -217,9 +217,7 @@ function renderMenu() {
         // Render products for this category
         const productsContainer = section.querySelector(`#products-${category}`);
         products.forEach(product => {
-            if (product.available) {
-                productsContainer.appendChild(createProductCard(product));
-            }
+            productsContainer.appendChild(createProductCard(product));
         });
     });
 }
