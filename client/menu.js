@@ -839,6 +839,8 @@ function setupEventListeners() {
     let startX = 0;
     let endX = 0;
     const carousel = document.getElementById('carousel-container');
+    carousel.style.overflowX = 'hidden';
+    carousel.style.overflowY = 'hidden';
 
     carousel.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
