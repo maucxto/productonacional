@@ -27,16 +27,16 @@ async function initializeApp() {
 
         // Conectar WebSocket
         ws.connect();
-
+        
         // Cargar menú
         await loadMenu();
-
+        
         // Configurar event listeners
         setupEventListeners();
-
+        
         // Cargar carrito desde localStorage
         loadCart();
-
+        
         // Ocultar loading
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('menu-content').classList.remove('hidden');
@@ -94,102 +94,17 @@ function renderCategories() {
         'VINO': 'fa-wine-glass'
     };
 
-    Object.keys(menuData).forEach((category) => {
+    Object.keys(menuData).forEach((category, index) => {
         const button = document.createElement('button');
-        button.className = 'flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors';
+        button.className = `flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+            index === 0 ? 'bg-amber-100 text-amber-800' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+        }`;
         button.innerHTML = `
             <i class="fas ${categoryIcons[category] || 'fa-utensils'} mr-2"></i>
             ${category}
         `;
         button.onclick = () => scrollToCategory(category);
         categoryNav.appendChild(button);
-    });
-}
-
-function renderCarousel() {
-    const carouselContainer = document.getElementById('carousel-container');
-    carouselContainer.innerHTML = '';
-
-    categoryKeys.forEach((category, index) => {
-        const slide = document.createElement('div');
-        slide.className = 'flex-shrink-0 w-full';
-
-        const products = menuData[category];
-
-        slide.innerHTML = `
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="font-display text-2xl font-bold text-gray-800">${category}</h2>
-                <div class="w-12 h-0.5 bg-gradient-to-r from-amber-400 to-amber-600"></div>
-            </div>
-            <div class="grid grid-cols-1 gap-4">
-                ${products.map(product => `
-                    <div class="product-card bg-white rounded-2xl p-4 shadow-custom cursor-pointer" onclick="openProductModal(${JSON.stringify(product)})">
-                        <div class="flex items-start space-x-4">
-                            <div class="flex-shrink-0">
-                                <img src="${product.image}" alt="${product.name}" 
-                                     class="w-20 h-20 rounded-xl object-cover">
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h3 class="font-semibold text-lg text-gray-800 mb-1">${product.name}</h3>
-                                <p class="text-sm text-gray-600 mb-2 line-clamp-2">${product.description}</p>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-xl font-bold text-gold">$${product.price}</span>
-                                    <div class="flex items-center space-x-2">
-                                        ${(product.tags || []).map(tag =>
-                                            `<span class="px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full">${tag}</span>`
-                                        ).join('')}
-                                    </div>
-                                </div>
-                            </div>
-                <div class="flex-shrink-0">
-                    <button onclick="openProductModal(${JSON.stringify(product)})" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
-                        <i class="fas fa-plus text-sm"></i>
-                    </button>
-                </div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        carouselContainer.appendChild(slide);
-    });
-}
-
-function renderIndicators() {
-    const indicatorsContainer = document.getElementById('carousel-indicators');
-    indicatorsContainer.innerHTML = '';
-
-    categoryKeys.forEach((_, index) => {
-        const indicator = document.createElement('button');
-        indicator.className = `w-3 h-3 rounded-full transition-colors ${
-            index === currentSlide ? 'bg-amber-500' : 'bg-gray-300'
-        }`;
-        indicator.onclick = () => goToSlide(index);
-        indicatorsContainer.appendChild(indicator);
-    });
-}
-
-function goToSlide(slideIndex) {
-    currentSlide = slideIndex;
-    const carouselContainer = document.getElementById('carousel-container');
-    const slideWidth = carouselContainer.offsetWidth;
-    carouselContainer.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
-
-    updateCarouselNav();
-    updateCarouselIndicators();
-}
-
-function updateCarouselIndicators() {
-    const indicators = document.querySelectorAll('#carousel-indicators button');
-    indicators.forEach((indicator, index) => {
-        if (index === currentSlide) {
-            indicator.classList.remove('bg-gray-300');
-            indicator.classList.add('bg-amber-500');
-        } else {
-            indicator.classList.remove('bg-amber-500');
-            indicator.classList.add('bg-gray-300');
-        }
     });
 }
 
@@ -217,7 +132,9 @@ function renderMenu() {
         // Render products for this category
         const productsContainer = section.querySelector(`#products-${category}`);
         products.forEach(product => {
-            productsContainer.appendChild(createProductCard(product));
+            if (product.available) {
+                productsContainer.appendChild(createProductCard(product));
+            }
         });
     });
 }
@@ -239,7 +156,7 @@ function createProductCard(product) {
                 <div class="flex items-center justify-between">
                     <span class="text-xl font-bold text-gold">$${product.price}</span>
                     <div class="flex items-center space-x-2">
-                        ${(product.tags || []).map(tag =>
+                        ${product.tags.map(tag => 
                             `<span class="px-2 py-1 bg-amber-50 text-amber-700 text-xs rounded-full">${tag}</span>`
                         ).join('')}
                     </div>
@@ -813,12 +730,12 @@ function setupEventListeners() {
     // Cart button
     document.getElementById('cart-btn').addEventListener('click', openCartModal);
     document.getElementById('cart-floating').addEventListener('click', openCartModal);
-
+    
     // WebSocket listeners
     ws.on('new_order', (data) => {
         console.log('New order received:', data);
     });
-
+    
     ws.on('order_status_change', (data) => {
         console.log('Order status changed:', data);
     });
