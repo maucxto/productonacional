@@ -133,8 +133,8 @@ function renderCarousel() {
                 <div class="w-12 h-0.5 bg-gradient-to-r from-amber-400 to-amber-600"></div>
             </div>
             <div class="grid grid-cols-1 gap-4">
-                ${products.filter(product => product.available).map(product => `
-                    <div class="product-card bg-white rounded-2xl p-4 shadow-custom cursor-pointer" onclick="openProductModal(JSON.parse('${JSON.stringify(product)}'))">
+                ${products.map(product => `
+                    <div class="product-card bg-white rounded-2xl p-4 shadow-custom cursor-pointer" onclick="openProductModal(${JSON.stringify(product)})">
                         <div class="flex items-start space-x-4">
                             <div class="flex-shrink-0">
                                 <img src="${product.image}" alt="${product.name}" 
@@ -153,7 +153,7 @@ function renderCarousel() {
                                 </div>
                             </div>
                 <div class="flex-shrink-0">
-                    <button onclick="openProductModal(JSON.parse('${JSON.stringify(product)}'))" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
+                    <button onclick="openProductModal(${JSON.stringify(product)})" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
                         <i class="fas fa-plus text-sm"></i>
                     </button>
                 </div>
@@ -898,6 +898,11 @@ function quickAddToCart(product) {
 
     // Show success animation
     showToast('Producto agregado al carrito', 'success');
+}
+
+// Function to open modal with product from JSON
+function openProductModalInfo(jsonString) {
+    openProductModal(JSON.parse(jsonString));
 }
 
 // Export functions for global access
