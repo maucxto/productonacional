@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto Nacional - Sistema de Restaurante Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-gold: #d4a574;
+            --primary-gold-light: #e6c08a;
+            --primary-gold-dark: #b8935f;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --bg-cream: #faf8f5;
+            --bg-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gradient-gold {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-light) 100%);
+        }
+
+        .text-gold {
+            color: var(--primary-gold);
+        }
+
+        .border-gold {
+            border-color: var(--primary-gold);
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(212, 165, 116, 0.3);
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(212, 165, 116, 0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-pattern min-h-screen flex items-center justify-center px-6 py-20">
+        <div class="max-w-6xl mx-auto text-center">
+            <!-- Logo -->
+            <div class="mb-8 floating">
+                <div class="w-24 h-24 gradient-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-utensils text-white text-4xl"></i>
+                </div>
+                <h1 class="font-display text-5xl md:text-7xl font-bold text-gray-800 mb-4">
+                    Producto Nacional
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8">
+                    Sistema de Restaurante Digital Inteligente
+                </p>
+            </div>
+
+            <!-- Description -->
+            <div class="max-w-3xl mx-auto mb-12">
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    Bienvenido al sistema completo de restaurante digital más avanzado. 
+                    Permite a tus clientes ordenar directamente desde sus mesas escaneando un código QR, 
+                    mientras tu equipo recibe notificaciones en tiempo real.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+                    <span class="flex items-center">
+                        <i class="fas fa-qrcode text-gold mr-2"></i>
+                        Menú Digital QR
+                    </span>
+                    <span class="flex items-center">
+                        <i class="fas fa-credit-card text-gold mr-2"></i>
+                        Pagos Seguros
+                    </span>
+                    <span class="flex items-center">
+                        <i class="fas fa-bell text-gold mr-2"></i>
+                        Notificaciones en Tiempo Real
+                    </span>
+                    <span class="flex items-center">
+                        <i class="fas fa-chart-line text-gold mr-2"></i>
+                        Analytics Completo
+                    </span>
+                </div>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <a href="client/index.html?table=1" class="feature-card bg-white rounded-2xl p-6 shadow-lg block">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Menú Cliente</h3>
+                    <p class="text-sm text-gray-600">Interfaz para clientes con carrusel de categorías</p>
+                    <div class="mt-4 text-xs text-gold font-medium">Mesa de prueba: 1</div>
+                </a>
+
+                <a href="dashboard/kitchen.html" class="feature-card bg-white rounded-2xl p-6 shadow-lg block">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-fire text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Cocina</h3>
+                    <p class="text-sm text-gray-600">Panel de cocina con órdenes en tiempo real</p>
+                    <div class="mt-4 text-xs text-gold font-medium">Notificaciones activas</div>
+                </a>
+
+                <a href="dashboard/bar.html" class="feature-card bg-white rounded-2xl p-6 shadow-lg block">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cocktail text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Barra</h3>
+                    <p class="text-sm text-gray-600">Gestión de bebidas y cocteles</p>
+                    <div class="mt-4 text-xs text-gold font-medium">Cocteles complejos</div>
+                </a>
+
+                <a href="dashboard/cashier.html" class="feature-card bg-white rounded-2xl p-6 shadow-lg block">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cash-register text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-2">Caja</h3>
+                    <p class="text-sm text-gray-600">Control de pagos y cuentas abiertas</p>
+                    <div class="mt-4 text-xs text-gold font-medium">Estadísticas en vivo</div>
+                </a>
+            </div>
+
+            <!-- Admin Access -->
+            <div class="mb-12">
+                <a href="admin/index.html" class="inline-flex items-center space-x-2 bg-white rounded-2xl px-8 py-4 shadow-lg hover:shadow-xl transition-all">
+                    <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-crown text-amber-600 text-xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="font-semibold text-gray-800">Panel Administrativo</div>
+                        <div class="text-sm text-gray-600">Dashboard completo con analytics</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- QR Generator -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg mb-12">
+                <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-qrcode text-gold mr-3"></i>
+                    Generador de Códigos QR
+                </h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    Genera códigos QR únicos para cada mesa. Los clientes escanean el código y acceden directamente 
+                    al menú con el número de mesa pre-cargado.
+                </p>
+                <a href="qr-generator.html" class="inline-flex items-center space-x-2 gradient-gold text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all">
+                    <i class="fas fa-magic"></i>
+                    <span>Generar Códigos QR</span>
+                </a>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-3">Diseño Mobile-First</h3>
+                    <p class="text-gray-600 text-sm">
+                        Optimizado para smartphones y tablets. Los clientes pueden ordenar fácilmente desde sus dispositivos móviles.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-3">Real-Time Updates</h3>
+                    <p class="text-gray-600 text-sm">
+                        Sistema WebSocket para notificaciones instantáneas entre mesas, cocina, barra y caja.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-3">Analytics Integrado</h3>
+                    <p class="text-gray-600 text-sm">
+                        Dashboard completo con métricas de ventas, productos más vendidos y análisis de rendimiento.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-3">Seguridad Avanzada</h3>
+                    <p class="text-gray-600 text-sm">
+                        Validación de datos, sanitización de inputs y autenticación segura para el personal.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-credit-card text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-3">Múltiples Pagos</h3>
+                    <p class="text-gray-600 text-sm">
+                        Tarjeta, efectivo, transferencia y cuenta abierta. Procesamiento seguro y confiable.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cogs text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-gray-800 mb-3">Personalizable</h3>
+                    <p class="text-gray-600 text-sm">
+                        Menú, precios, disponibilidad y configuración completamente personalizables desde el panel admin.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Test System -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg mb-12">
+                <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-flask text-gold mr-3"></i>
+                    Sistema de Pruebas
+                </h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    Prueba todas las funcionalidades del sistema. Ejecuta pruebas automatizadas para validar 
+                    el funcionamiento de base de datos, WebSocket, menú, carrito, pagos y panel administrativo.
+                </p>
+                <a href="test.html" class="inline-flex items-center space-x-2 bg-green-500 text-white px-6 py-3 rounded-xl hover:bg-green-600 transition-colors">
+                    <i class="fas fa-play"></i>
+                    <span>Ejecutar Pruebas</span>
+                </a>
+            </div>
+
+            <!-- Documentation -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <h2 class="font-display text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-book text-gold mr-3"></i>
+                    Documentación Completa
+                </h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    Guía completa de instalación, configuración y uso del sistema. 
+                    Incluye instrucciones para clientes, personal y administradores.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="docs/README.md" class="inline-flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Guía de Usuario</span>
+                    </a>
+                    <a href="package.json" class="inline-flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-code"></i>
+                        <span>Documentación Técnica</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="mb-6">
+                <div class="w-16 h-16 gradient-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-utensils text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display text-2xl font-bold mb-2">Producto Nacional</h3>
+                <p class="text-gray-400">Tecnología que sabe a México</p>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6">
+                <p class="text-sm text-gray-400">
+                    © 2025 Producto Nacional. Sistema de Restaurante Digital Inteligente.
+                </p>
+                <p class="text-xs text-gray-500 mt-2">
+                    Desarrollado con ❤️ para la industria gastronómica mexicana
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate feature cards
+            anime({
+                targets: '.feature-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(200),
+                duration: 800,
+                easing: 'easeOutQuart'
+            });
+
+            // Animate other sections
+            anime({
+                targets: 'section > div > div',
+                translateY: [30, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100),
+                duration: 600,
+                easing: 'easeOutQuart'
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add pulse animation to QR icon
+        setInterval(() => {
+            const qrIcon = document.querySelector('.fa-qrcode');
+            if (qrIcon) {
+                qrIcon.classList.add('pulse-animation');
+                setTimeout(() => {
+                    qrIcon.classList.remove('pulse-animation');
+                }, 2000);
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
