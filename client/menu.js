@@ -152,11 +152,11 @@ function renderCarousel() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex-shrink-0">
-                                <button class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
-                                    <i class="fas fa-plus text-sm"></i>
-                                </button>
-                            </div>
+                <div class="flex-shrink-0">
+                    <button onclick="quickAddToCart(JSON.parse('${JSON.stringify(product)}'))" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
+                        <i class="fas fa-plus text-sm"></i>
+                    </button>
+                </div>
                         </div>
                     </div>
                 `).join('')}
@@ -879,11 +879,31 @@ function setupEventListeners() {
     });
 }
 
+// Quick add to cart function for plus buttons
+function quickAddToCart(product) {
+    const cartItem = {
+        id: Date.now(),
+        product: product,
+        quantity: 1,
+        comments: '',
+        selectedOption: null,
+        price: product.price
+    };
+
+    cart.push(cartItem);
+    saveCart();
+    updateCartUI();
+
+    // Show success animation
+    showToast('Producto agregado al carrito', 'success');
+}
+
 // Export functions for global access
 window.closeProductModal = closeProductModal;
 window.changeQuantity = changeQuantity;
 window.selectOption = selectOption;
 window.addToCart = addToCart;
+window.quickAddToCart = quickAddToCart;
 window.closeCartModal = closeCartModal;
 window.removeFromCart = removeFromCart;
 window.proceedToPayment = proceedToPayment;
