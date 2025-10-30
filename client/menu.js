@@ -8,8 +8,6 @@ let menuData = {};
 let cart = [];
 let currentTable = null;
 let selectedProduct = null;
-let currentSlide = 0;
-let categoryKeys = [];
 
 // Inicialización de la aplicación
 document.addEventListener('DOMContentLoaded', async function() {
@@ -41,7 +39,7 @@ async function initializeApp() {
 
         // Ocultar loading
         document.getElementById('loading').classList.add('hidden');
-        document.getElementById('menu-carousel').classList.remove('hidden');
+        document.getElementById('menu-content').classList.remove('hidden');
         
         // Animar entrada
         animateMenuEntrance();
@@ -57,11 +55,8 @@ async function loadMenu() {
         const response = await api.getMenu();
         if (response.success) {
             menuData = response.data;
-            categoryKeys = Object.keys(menuData);
-            renderCarousel();
-            renderIndicators();
-            updateCarouselNav();
-            updateCarouselIndicators();
+            renderCategories();
+            renderMenu();
         } else {
             throw new Error('Error cargando menú');
         }
@@ -69,12 +64,8 @@ async function loadMenu() {
         console.error('Error loading menu:', error);
         // Usar datos de respaldo
         menuData = organizeProductsByCategory(db.getProducts());
-        categoryKeys = Object.keys(menuData);
-        updateCarouselNav();
-        renderCarousel();
-        renderIndicators();
-        updateCarouselNav();
-        updateCarouselIndicators();
+        renderCategories();
+        renderMenu();
     }
 }
 
@@ -89,7 +80,7 @@ function organizeProductsByCategory(products) {
     return categories;
 }
 
-function updateCarouselNav() {
+function renderCategories() {
     const categoryNav = document.getElementById('category-nav');
     categoryNav.innerHTML = '';
 
@@ -103,16 +94,14 @@ function updateCarouselNav() {
         'VINO': 'fa-wine-glass'
     };
 
-    categoryKeys.forEach((category, index) => {
+    Object.keys(menuData).forEach((category) => {
         const button = document.createElement('button');
-        button.className = `flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-            index === currentSlide ? 'bg-amber-100 text-amber-800' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-        }`;
+        button.className = 'flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors';
         button.innerHTML = `
             <i class="fas ${categoryIcons[category] || 'fa-utensils'} mr-2"></i>
             ${category}
         `;
-        button.onclick = () => goToSlide(index);
+        button.onclick = () => scrollToCategory(category);
         categoryNav.appendChild(button);
     });
 }
@@ -827,50 +816,6 @@ function setupEventListeners() {
     document.getElementById('cart-btn').addEventListener('click', openCartModal);
     document.getElementById('cart-floating').addEventListener('click', openCartModal);
 
-    // Carousel navigation buttons
-    document.getElementById('prev-slide').addEventListener('click', () => {
-        goToSlide(Math.max(0, currentSlide - 1));
-    });
-    document.getElementById('next-slide').addEventListener('click', () => {
-        goToSlide(Math.min(categoryKeys.length - 1, currentSlide + 1));
-    });
-
-    // Swipe/touch listeners for carousel
-    let startX = 0;
-    let endX = 0;
-    const carousel = document.getElementById('carousel-container');
-    carousel.style.overflowX = 'hidden';
-    carousel.style.overflowY = 'hidden';
-
-    carousel.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
-
-    carousel.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        const deltaX = startX - endX;
-        if (Math.abs(deltaX) > 50) { // Minimum swipe distance
-            if (deltaX > 0) {
-                // Swipe left - next slide
-                goToSlide(Math.min(categoryKeys.length - 1, currentSlide + 1));
-            } else {
-                // Swipe right - previous slide
-                goToSlide(Math.max(0, currentSlide - 1));
-            }
-        }
-    }
-
-    // Window resize to update carousel position
-    window.addEventListener('resize', () => {
-        const carouselContainer = document.getElementById('carousel-container');
-        const slideWidth = carouselContainer.offsetWidth;
-        carouselContainer.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-    });
-
     // WebSocket listeners
     ws.on('new_order', (data) => {
         console.log('New order received:', data);
@@ -881,36 +826,11 @@ function setupEventListeners() {
     });
 }
 
-// Quick add to cart function for plus buttons
-function quickAddToCart(product) {
-    const cartItem = {
-        id: Date.now(),
-        product: product,
-        quantity: 1,
-        comments: '',
-        selectedOption: null,
-        price: product.price
-    };
-
-    cart.push(cartItem);
-    saveCart();
-    updateCartUI();
-
-    // Show success animation
-    showToast('Producto agregado al carrito', 'success');
-}
-
-// Function to open modal with product from JSON
-function openProductModalInfo(jsonString) {
-    openProductModal(JSON.parse(jsonString));
-}
-
 // Export functions for global access
 window.closeProductModal = closeProductModal;
 window.changeQuantity = changeQuantity;
 window.selectOption = selectOption;
 window.addToCart = addToCart;
-window.quickAddToCart = quickAddToCart;
 window.closeCartModal = closeCartModal;
 window.removeFromCart = removeFromCart;
 window.proceedToPayment = proceedToPayment;
