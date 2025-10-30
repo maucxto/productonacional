@@ -153,7 +153,7 @@ function renderCarousel() {
                                 </div>
                             </div>
                 <div class="flex-shrink-0">
-                    <button onclick="quickAddToCart(JSON.parse('${JSON.stringify(product)}'))" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
+                    <button onclick="openProductModal(JSON.parse('${JSON.stringify(product)}'))" class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center hover:bg-amber-200 transition-colors">
                         <i class="fas fa-plus text-sm"></i>
                     </button>
                 </div>
